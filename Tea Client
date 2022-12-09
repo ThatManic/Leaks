@@ -1,0 +1,105 @@
+local jumperypowery = game.Players.LocalPlayer.Character.Humanoid.JumpPower 
+local walkyspeedy = game.Players.LocalPlayer.Character.Humanoid.WalkSpeed 
+print("REGULAR WALKSPPEED:", walkyspeedy)
+print("REGULAR JUMPPOWER:", jumperypowery)
+
+getgenv().SecureMode = true
+local Rayfield = loadstring(game:HttpGet('https://raw.githubusercontent.com/shlexware/Rayfield/main/source'))()
+
+Rayfield:Notify({
+    Title = "Loading Tea Client please wait!",
+    Content = "Tea client is currently loading and you have to enter the key or you can use the menu if you have already entered it.",
+    Duration = 1,
+    Image = 4483362458,
+    Actions = { -- Notification Buttons
+        Ignore = {
+            Name = "Close",
+            Callback = function()
+            end
+		},
+	},
+})
+
+
+local Window = Rayfield:CreateWindow({
+	Name = "Tea Client",
+	LoadingTitle = "Official Tea Client",
+	LoadingSubtitle = "By [REDACTED]",
+	ConfigurationSaving = {
+		Enabled = true,
+		FolderName = nil, -- Create a custom folder for your hub/game
+		FileName = "TeaTeaTeaTeaClientwithtea"
+	},
+        Discord = {
+        	Enabled = false,
+        	Invite = "", -- The Discord invite code, do not include discord.gg/
+        	RememberJoins = true -- Set this to false to make them join the discord every time they load it up
+        },
+	KeySystem = true, -- Set this to true to use our key system
+	KeySettings = {
+		Title = "Tea Client",
+		Subtitle = "Key System",
+		Note = "Insert cash or select payment type.",
+		FileName = "Insert Key",
+		SaveKey = true,
+		GrabKeyFromSite = false, -- If this is true, set Key below to the RAW site you would like Rayfield to get the key from
+		Key = "TeaClientKeyIsHere!"
+	}
+})
+
+--Player
+local PlayerTab = Window:CreateTab("LocalPlayer", 4483362458) -- Title, Image
+local MovementSection = PlayerTab:CreateSection("Movement")
+local Slider = PlayerTab:CreateSlider({
+	Name = "Walkspeed",
+	Range = {0, 100},
+	Increment = 1,
+	Suffix = "Speedos",
+	CurrentValue = 8,
+	Flag = "Speedos", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+	Callback = function(Speedo)
+		game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = Speedo + 8
+        print("Your current speed:", Speedo + 8)
+	end,
+})
+
+local Slider = PlayerTab:CreateSlider({
+	Name = "JumpPower",
+	Range = {0, 100},
+	Increment = 1,
+	Suffix = "Jumpos",
+	CurrentValue = 17,
+	Flag = "Jumpos", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+	Callback = function(Jumpo)
+		game.Players.LocalPlayer.Character.Humanoid.JumpPower = Jumpo + 8
+        print("Your current jumppower:", Jumpo + 8)
+	end,
+})
+
+local Button = PlayerTab:CreateButton({
+	Name = "Infinite Jump",
+	Callback = function()
+
+
+local Player = game:GetService'Players'.LocalPlayer;
+local UIS = game:GetService'UserInputService';
+
+_G.JumpHeight = game.Players.LocalPlayer.Character.Humanoid.JumpPower;
+
+function Action(Object, Function) if Object ~= nil then Function(Object); end end
+
+UIS.InputBegan:connect(function(UserInput)
+    if UserInput.UserInputType == Enum.UserInputType.Keyboard and UserInput.KeyCode == Enum.KeyCode.Space then
+        Action(Player.Character.Humanoid, function(self)
+            if self:GetState() == Enum.HumanoidStateType.Jumping or self:GetState() == Enum.HumanoidStateType.Freefall then
+                Action(self.Parent.HumanoidRootPart, function(self)
+                    self.Velocity = Vector3.new(0, _G.JumpHeight, 0);
+                end)
+            end
+        end)
+    end
+end)
+
+
+	end,
+})
